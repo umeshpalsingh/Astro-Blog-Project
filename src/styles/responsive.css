@@ -1,0 +1,230 @@
+@media(min-width:1200px) {
+	.container {
+		max-width: 1200px;
+		width: 100%;
+	}
+}
+
+@media (max-width: 1399px) {
+    :root {
+        --fs-65: 60px;
+        --fs-40: 36px;
+        --fs-30: 28px;
+        --fs-22: 20px;
+        --fs-20: 18px;
+        --fs-18: 16px;  
+    }
+    .banner-section {
+        height: 500px;
+    }
+    .google-map-section .map-inner iframe, .map-inner {
+        height: 400px;
+    }
+    .contact-section {
+        padding: 80px 0;
+    }
+}
+
+@media (max-width: 1199px) {
+    :root {
+        --fs-65: 55px;
+        --fs-40: 32px;
+        --fs-22: 18px;
+    }
+    .main-navigation .menu-list {
+        gap: 15px;
+    }
+    .site-header li {
+        font-size: 16px;
+    }
+    .site-branding a {
+        font-size: 18px;
+    }
+    .main-title {
+        margin-bottom: 20px;
+    }
+    .small-banner {
+        height: 280px;
+    }
+    .main-details {
+        max-width: 600px;
+    }
+    .about-content {
+        max-width: 520px;
+    }
+}
+
+@media (max-width: 991px) {
+    :root {
+        --fs-65: 50px;
+        --fs-40: 30px;
+        --fs-30: 26px;
+        --fs-20: 16px;
+    }
+    .site-branding {
+        max-width: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .mobile-toggle {
+        display: block;
+    }
+    .main-navigation {
+        display: none;
+        width: 100%;
+    }
+    .header-box {
+        flex-direction: column;
+        align-items: start;
+        gap: 24px;
+    }
+    .main-navigation .menu-list {
+        flex-direction: column;
+        align-items: start;
+        gap: 20px;
+    }
+    .site-header li {
+        font-size: 16px;
+    }
+
+    .banner-section {
+        height: 420px;
+    }
+    .mv-title {
+        margin-bottom: 10px;
+    }
+    .guide-box {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+    .c-flex {
+        flex-direction: column;
+    }
+    .main-details {
+        max-width: 100%;
+        width: 100%;
+    }
+    .about-box {
+        flex-direction: column;
+        align-items: center;
+    }
+    .about-content {
+        max-width: 100%;
+    }
+    .about-heading {
+        margin-bottom: 10px;
+    }
+    .discount-box {
+        margin-bottom: 30px;
+    }
+    .form-inner {
+        padding-top: 40px;
+    }
+    .sec-title p {
+        margin-bottom: 10px;
+    }
+    .sec-title,
+    .contact-section .contact-info-inner .single-box,
+    .contact-section .form-inner h3,
+    .default-form .form-group {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    :root {
+        --fs-65: 45px;
+        --fs-40: 28px;
+        --fs-30: 24px;  
+        --fs-24: 22px;
+        --fs-22: 16px;
+    }
+    .footer-logo a {
+        font-size: 18px;
+    }
+    .footer_contact_link li a {
+        font-size: 16px;
+    }
+    .small-banner {
+        height: 240px;
+    }
+    .google-map-section .map-inner iframe, .map-inner {
+        height: 300px;
+    }
+}
+
+@media (max-width: 575px) {
+    :root {
+        --fs-65: 40px;
+        --fs-40: 26px;
+        --fs-24: 20px;
+        --fs-22: 15px;
+        --fs-20: 15px;
+        --fs-18: 15px;
+        --fs-16: 15px;
+    }
+    .banner-section {
+        height: 380px;
+    }
+    #myBtn {
+        right: 20px;
+    }
+    .small-banner {
+        height: 200px;
+    }
+}
+
+@media (max-width: 428px) {
+    :root {
+        --fs-65: 35px;
+        --fs-40: 24px;  
+        --fs-30: 22px;
+        --fs-24: 18px;
+    }
+    .hamburger {
+        transform: translateY(-4px);
+    }
+    .site-branding a {
+        font-size: 16px;
+    }
+    .hamburger, .hamburger-one:before, .hamburger-one:after {
+        height: 2px;
+    }
+    .hamburger:before {
+        top: -10px;
+    }
+    .hamburger:after {
+        top: 10px;
+    }
+    .copyright-block p {
+        font-size: 15px;
+    }
+
+    .mission-vision-section, 
+    .comit-section, 
+    .contact-section {
+        padding: 40px 0;
+    }
+    .mv-box {
+        margin-bottom: 30px;
+    }
+    .content-heading {
+        margin-bottom: 10px;
+    }
+    .about-box {
+        padding: 20px;
+        gap: 20px;
+    }
+    .note-wrap p {
+        font-size: 13px;
+    }
+    .service-section {
+        padding: 60px 0;
+    }
+    .service-box {
+        padding: 30px 20px;
+    }
+
+}

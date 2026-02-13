@@ -1,0 +1,69 @@
+---
+let status = "";
+---
+
+<form id="contactForm">
+  <input type="text" name="name" placeholder="Your name" required />
+  <input type="email" name="email" placeholder="Your email" required />
+  <textarea name="message" placeholder="Your message" required></textarea>
+  <button type="submit">Send</button>
+</form>
+
+<p id="response"></p>
+
+<script>
+  const form = document.getElementById("contactForm");
+  const responseEl = document.getElementById("response");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
+    try {
+      // FIX: Removed the extra https:// from the start
+      const res = await fetch("http://my-astro-backend.local/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: `
+            mutation SubmitContact($name: String!, $email: String!, $message: String!) {
+              submitContactForm(input: {
+                name: $name,
+                email: $email,
+                message: $message
+              }) {
+                success
+                message
+              }
+            }
+          `,
+          variables: data,
+        }),
+      });
+
+      const json = await res.json();
+
+      // Check if the response actually contains the expected data structure
+      if (json.data && json.data.submitContactForm) {
+        responseEl.textContent = json.data.submitContactForm.message;
+
+        if (json.data.submitContactForm.success) {
+          form.reset();
+        }
+      } else {
+        responseEl.textContent = "Error: Invalid response from server.";
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+      responseEl.textContent = "Error: Could not connect to the server.";
+    }
+  });
+</script>

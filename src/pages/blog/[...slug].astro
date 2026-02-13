@@ -1,20 +1,61 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+const API_URL = import.meta.env.WORDPRESS_API_URL;
 
+// 1. Tell Astro which paths to generate
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
-}
-type Props = CollectionEntry<'blog'>;
+  const API_URL = import.meta.env.WORDPRESS_API_URL;
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: `
+        {
+          posts {
+            nodes {
+              slug
+            }
+          }
+        }
+      `
+    }),
+  });
 
-const post = Astro.props;
-const { Content } = await render(post);
+  const { data } = await res.json();
+
+  return data.posts.nodes.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+// 2. Fetch the data for the specific post being viewed
+const { slug } = Astro.params;
+
+const res = await fetch(API_URL, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    query: `
+      query GetPostBySlug($id: ID!) {
+        post(id: $id, idType: SLUG) {
+          title
+          content
+          date
+        }
+      }
+    `,
+    variables: { id: slug }
+  }),
+});
+
+const { data } = await res.json();
+const post = data.post;
 ---
 
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+<MainLayout title={post.title} description={post.title}>
+  <article class="container">
+    <h1>{post.title}</h1>
+    <p class="date">{new Date(post.date).toLocaleDateString()}</p>
+    <div class="content" set:html={post.content} />
+  </article>
+</MainLayout>
