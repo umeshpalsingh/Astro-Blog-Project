@@ -21,8 +21,7 @@ html {
 body {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;   
-    /* font-family: 'Poppins', sans-serif; */
-    font-family: "Bebas Neue", sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 h1,
 h2,
@@ -37,9 +36,6 @@ a,
 p {
     margin: 0;
     padding: 0;
-}
-p {
-    font-family: "Poppins", sans-serif;
 }
 ul {
     list-style: none;
@@ -79,7 +75,6 @@ img {
 .site-branding a {
     font-size: 20px;
     color: #000;
-    letter-spacing: 2px;
     /* background-color: #FFF; */
     padding: 4px 10px;
     display: block;
@@ -91,7 +86,7 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 14px 0;
 }
 .main-navigation .menu-list {
     display: flex;
@@ -107,7 +102,6 @@ img {
     font-size: inherit;
     color: #FFF;
     position: relative;
-    letter-spacing: 2px;
     text-transform: uppercase;
     transition: all .2s ease-in;
 }
@@ -170,7 +164,6 @@ img {
 }
 .site-footer a {
     color: #FFF;
-    letter-spacing: 2px;
     transition: all .4s ease-in-out;
 }
 .footer-logo a img {
@@ -186,7 +179,6 @@ img {
     font-size: 20px;
     color: #000;
     background: #FFF;
-    letter-spacing: 2px;
     padding: 8px 16px;
     display: inline-block;
 }
@@ -307,7 +299,7 @@ i.fa.fa-instagram {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0, 0, 0, 0.4);
     border-top: 1px solid #222;
 }
 .banner-section::before {
@@ -347,7 +339,6 @@ i.fa.fa-instagram {
     font-size: var(--fs-65);
     line-height: 1.2;
     margin-bottom: 32px;
-    letter-spacing: 1px;
     animation-name: fadedown;
     animation-duration: 2s;
 }
@@ -379,7 +370,6 @@ i.fa.fa-instagram {
     font-size: var(--fs-40);
     margin-bottom: 16px;
     line-height: 1.2;
-    letter-spacing: 2px;
     font-weight: 700;
 }
 
@@ -403,7 +393,6 @@ i.fa.fa-instagram {
 .small-title {
     color: #f7f7f7;
     font-size: var(--fs-40);
-    letter-spacing: 2px;
     line-height: 1.4;
     text-align: center;
 }
@@ -457,7 +446,6 @@ i.fa.fa-instagram {
 .guide-name {
     font-size: var(--fs-22);
     color: #000;
-    letter-spacing: 2px;
     margin: 0 0 10px;
     text-transform: uppercase;
     line-height: 1.2;
@@ -489,7 +477,6 @@ i.fa.fa-instagram {
     margin-top: 20px;
     font-size: 16px;
     display: block;
-    letter-spacing: 2px;
     padding: 8px 16px;
 }
 
@@ -515,7 +502,6 @@ i.fa.fa-instagram {
 .content-heading {
     font-size: var(--fs-30);
     line-height: 1.2;
-    letter-spacing: 2px;
     margin-bottom: 20px;
 }
 
@@ -535,7 +521,6 @@ i.fa.fa-instagram {
     padding: 12px 24px;
     font-size: var(--fs-16);
     line-height: 1;
-    letter-spacing: 2px;
     margin: 10px 0 30px;
     transition: all .4s ease-in-out;
 }
@@ -578,7 +563,6 @@ i.fa.fa-instagram {
     color: #FFF;
     font-size: var(--fs-40);
     margin-bottom: 20px;
-    letter-spacing: 2px;
     line-height: 1.2;
 }
 .about-box {
@@ -604,7 +588,6 @@ i.fa.fa-instagram {
     font-size: var(--fs-40);
     color: #000;
     margin-bottom: 20px;
-    letter-spacing: 2px;
 }
 .contact-info p {
     font-size: var(--fs-18);
@@ -857,7 +840,6 @@ i.fa.fa-instagram {
     color: #848484;
     text-transform: uppercase;
     margin-bottom: 30px;
-    letter-spacing: 3px;
 }
 .sec-title h2 {
     position: relative;

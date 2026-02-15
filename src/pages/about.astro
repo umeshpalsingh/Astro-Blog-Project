@@ -16,29 +16,58 @@ query Aboutpage {
         altText
       }
     }
+    # This must be outside of featuredImage
+    pageSettings {
+      bannerTitle
+      bannerImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+    }
   }
 }
 
 `;
 
 const pagedata = await queryWordPress(QUERY_ABOUT);
-
 const finaldata = pagedata?.page || {};
-console.log("bjfjfjejf",finaldata)
-const seodata = finaldata?.seo || {};
-const aboutUs = finaldata?.aboutUs || {};
+
+console.log(finaldata)
+
+// Destructure the ACF fields
+const { bannerTitle, bannerImage } = finaldata?.pageSettings || {};
+
+// Use ACF title if it exists, otherwise use the WordPress page title
+const displayTitle = bannerTitle || finaldata?.title;
+
+// Use ACF image if it exists, otherwise use a fallback
+const displayImage = bannerImage || "/assets/images/greenforest.webp";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead  />
+    <BaseHead />
   </head>
   <body>
     <Header />
-    <h1>{finaldata?.title}</h1>
-    <div set:html={finaldata?.content}></div>
-   
+    <section
+      class="banner-section home"
+      style={`background-image: url(${displayImage?.node?.sourceUrl});`}
+    >
+      <div class="container">
+        <div class="banner-content">
+          <h1 class="main-title">{displayTitle}</h1>
+        </div>
+      </div>
+    </section>
+    
+    <div class="container my-5">
+      <div set:html={finaldata?.content} />
+    </div>
+
     <Footer />
   </body>
 </html>

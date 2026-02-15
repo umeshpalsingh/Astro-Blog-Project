@@ -2,6 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import { queryWordPress } from "../lib/wordpress";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
 // 1. Get the URL from your .env file
@@ -20,6 +21,21 @@ const query = `
 }
 `;
 
+const QUERY_BANNER = `
+{
+page(id: "home", idType: URI) {
+    pageSettings {
+      bannerTitle
+      bannerImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+    }
+}
+}`;
+
 // 3. Fetch the data from WordPress
 const response = await fetch(API_URL, {
   method: "POST",
@@ -29,6 +45,18 @@ const response = await fetch(API_URL, {
 
 const { data } = await response.json();
 const posts = data.posts.nodes;
+
+const pagedata = await queryWordPress(QUERY_BANNER);
+const finaldata = pagedata?.page || {};
+
+// Destructure the ACF fields
+const { bannerTitle, bannerImage } = finaldata?.pageSettings || {};
+
+// Use ACF title if it exists, otherwise use the WordPress page title
+const displayTitle = bannerTitle || finaldata?.title;
+
+// Use ACF image if it exists, otherwise use a fallback
+const displayImage = bannerImage || "/assets/images/greenforest.webp";
 ---
 
 <!doctype html>
@@ -39,6 +67,17 @@ const posts = data.posts.nodes;
   </head>
   <body>
     <Header />
+
+    <section
+      class="banner-section home"
+      style={`background-image: url(${displayImage?.node?.sourceUrl});`}
+    >
+      <div class="container">
+        <div class="banner-content">
+          <h1 class="main-title">{displayTitle}</h1>
+        </div>
+      </div>
+    </section>
 
     <h1>Latest Blog Posts</h1>
 

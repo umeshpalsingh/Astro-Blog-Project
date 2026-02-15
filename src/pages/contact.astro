@@ -1,15 +1,146 @@
 ---
 let status = "";
+
+import { queryWordPress } from "../lib/wordpress";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 ---
 
-<form id="contactForm">
-  <input type="text" name="name" placeholder="Your name" required />
-  <input type="email" name="email" placeholder="Your email" required />
-  <textarea name="message" placeholder="Your message" required></textarea>
-  <button type="submit">Send</button>
-</form>
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead />
+  </head>
+  <body>
+    <Header />
 
-<p id="response"></p>
+    <section class="contact-section">
+      <div class="container">
+        <div class="row clearfix">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 info-column">
+            <div class="contact-info-inner">
+              <div class="sec-title">
+                <p>Contact us</p>
+                <h2>Our Contacts &amp; Location</h2>
+              </div>
+              <div class="single-box">
+                <h3>Contact info</h3>
+                <ul class="list clearfix">
+                  <li>
+                    Address - 520 Shepherd Dr., <br /> Garland, TX 75042
+                  </li>
+                  <li>
+                    <a href="mailto:innerlightkambo@gmail.com"
+                      >innerlightkambo@gmail.com</a
+                    >
+                  </li>
+                  <li><a href="tel:(314) 614-5213">Ph. (314) 614-5213</a></li>
+                </ul>
+              </div>
+              <div class="single-box">
+                <h3>Social contact</h3>
+                <ul class="social-links clearfix">
+                  <li>
+                    <a href="javascript:void(0)" target="_blank"
+                      ><i class="fab fa fa-facebook"></i></a
+                    >
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)" target="_blank"
+                      ><i class="fa fa-instagram" aria-hidden="true"></i></a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 form-column">
+            <div class="form-inner">
+              <h3>Drop us a line</h3>
+              <div id="contact-form" class="default-form">
+                <form id="contactForm">
+                  <div class="row clearfix">
+                    <div
+                      class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 form-group"
+                    >
+                      <span>
+                        <label for="name">Enter Name</label>
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="Your Name *"
+                          required
+                        />
+                      </span>
+                    </div>
+                    <div
+                      class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 form-group"
+                    >
+                      <span>
+                        <label for="email">Enter Email</label>
+                        <input
+                          type="text"
+                          name="email"
+                          placeholder="Your Email *"
+                          required
+                        />
+                      </span>
+                    </div>
+                    <div
+                      class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 form-group"
+                    >
+                      <span>
+                        <label for="phone">Enter Phone No.</label>
+                        <input
+                          type="text"
+                          name="phone"
+                          placeholder="Your Phone"
+                        />
+                      </span>
+                    </div>
+                    <div
+                      class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 form-group"
+                    >
+                      <span>
+                        <label for="subject">Enter Subject</label>
+                        <input
+                          type="text"
+                          name="subject"
+                          placeholder="Subject"
+                        />
+                      </span>
+                    </div>
+                    <div
+                      class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 form-group"
+                    >
+                      <span>
+                        <label for="message">Enter Message</label>
+                        <textarea
+                          name="message"
+                          placeholder="Your Message ..."
+                          rows="5"
+                          required></textarea>
+                      </span>
+                    </div>
+                    <div
+                      class="col-lg-12 col-md-12 col-sm-12 form-group message-btn"
+                    >
+                      <button type="submit">Send</button>
+                    </div>
+                  </div>
+                </form>
+                <p id="response"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </body>
+</html>
 
 <script>
   const form = document.getElementById("contactForm");
@@ -22,11 +153,12 @@ let status = "";
     const data = {
       name: formData.get("name"),
       email: formData.get("email"),
+      phone: formData.get("phone"),
+      subject: formData.get("subject"),
       message: formData.get("message"),
     };
 
     try {
-      // FIX: Removed the extra https:// from the start
       const res = await fetch("http://my-astro-backend.local/graphql", {
         method: "POST",
         headers: {
@@ -34,10 +166,18 @@ let status = "";
         },
         body: JSON.stringify({
           query: `
-            mutation SubmitContact($name: String!, $email: String!, $message: String!) {
+            mutation SubmitContact(
+              $name: String!, 
+              $email: String!, 
+              $phone: String, 
+              $subject: String, 
+              $message: String!
+            ) {
               submitContactForm(input: {
                 name: $name,
                 email: $email,
+                phone: $phone,
+                subject: $subject,
                 message: $message
               }) {
                 success
@@ -51,15 +191,16 @@ let status = "";
 
       const json = await res.json();
 
-      // Check if the response actually contains the expected data structure
       if (json.data && json.data.submitContactForm) {
         responseEl.textContent = json.data.submitContactForm.message;
-
         if (json.data.submitContactForm.success) {
           form.reset();
         }
       } else {
-        responseEl.textContent = "Error: Invalid response from server.";
+        // Log the actual error to help you debug
+        console.log("GraphQL Errors:", json.errors);
+        responseEl.textContent =
+          "Error: " + (json.errors?.[0]?.message || "Invalid response");
       }
     } catch (error) {
       console.error("Fetch error:", error);
