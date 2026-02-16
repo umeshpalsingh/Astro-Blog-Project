@@ -1,4 +1,6 @@
 ---
+import HeaderLink from "./HeaderLink.astro";
+
 const API_URL = import.meta.env.WORDPRESS_API_URL;
 
 const query = `
@@ -53,7 +55,7 @@ const menuItems = data.menuItems.nodes;
           {
             menuItems.map((item) => (
               <li class="menu-item">
-                <a href={item.uri}>{item.label}</a>
+                <HeaderLink href={item.uri}>{item.label}</HeaderLink>
               </li>
             ))
           }

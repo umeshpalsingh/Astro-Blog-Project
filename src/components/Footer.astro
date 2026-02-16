@@ -1,44 +1,71 @@
 ---
+import { queryWordPress } from "../lib/wordpress";
+
+const FOOTER_QUERY = `
+  query GetFooterWidgets {
+    mainSidebar
+    footerSectionOne
+  }
+`;
+
+const data = await queryWordPress(FOOTER_QUERY);
+const mainSidebar = data?.mainSidebar || "";
+const footerSectionOne = data?.footerSectionOne || "";
+
 const today = new Date();
 ---
 
-<!-- <footer>
-	&copy; {today.getFullYear()} Your name here. All rights reserved.
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-block" set:html={footerSectionOne} />
 
-</footer> -->
+      <div class="footer-block footer-links" set:html={mainSidebar} />
+    </div>
+
+    <div class="copyright-block">
+      <p>© {today.getFullYear()} Inner Light Kambo Vancouver. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
 <script>
-$(document).ready(function () {
-  $('#toggler').click(function () {
-    $('.main-navigation').slideToggle(200);
-    $('#toggler .hamburger').toggleClass('rotate');
+  $(document).ready(function () {
+    $("#toggler").click(function () {
+      $(".main-navigation").slideToggle(200);
+      $("#toggler .hamburger").toggleClass("rotate");
+    });
+
+    // let height = $(".site-header").height();
+    // $(".margin-top").css("margin-top", `${height}px`);
   });
 
-  // let height = $(".site-header").height();
-  // $(".margin-top").css("margin-top", `${height}px`);
-});
-
-
-// Get the button
-let mybutton = document.getElementById("myBtn");
-// When the user scrolls down 400px from the top of the document, show the button
-window.onscroll = function () { scrollFunction() };
-function scrollFunction() {
-  if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
-    mybutton.style.display = "block";
-  } else {
-    mybutton.style.display = "none";
+  // Get the button
+  let mybutton = document.getElementById("myBtn");
+  // When the user scrolls down 400px from the top of the document, show the button
+  window.onscroll = function () {
+    scrollFunction();
+  };
+  function scrollFunction() {
+    if (
+      document.body.scrollTop > 400 ||
+      document.documentElement.scrollTop > 400
+    ) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
   }
-}
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-}
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
 
-// AOS.init({
-//   duration: 1500,
-//   easing: 'ease',
-//   once: true,
-//   disable: window.innerWidth < 1200
-// });
+  // AOS.init({
+  //   duration: 1500,
+  //   easing: 'ease',
+  //   once: true,
+  //   disable: window.innerWidth < 1200
+  // });
 </script>
